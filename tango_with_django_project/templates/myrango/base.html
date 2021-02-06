@@ -112,10 +112,17 @@
 
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'myrango:list_profiles' %}">
+                        List Profiles
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'auth_logout' %}?next=/myrango/">
                         Logout
                     </a>
                 </li>
+
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'registration_register' %}">
