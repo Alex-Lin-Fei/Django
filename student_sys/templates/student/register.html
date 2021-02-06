@@ -1,0 +1,31 @@
+{% extends 'student/base.html' %}
+{% load static %}
+
+{% block body_block %}
+    <div id="text">
+
+    </div>
+    <h3>Please enter the information</h3>
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        <label><strong>Name</strong>: <input type="text" id="name"></label>
+        <br/>
+        <label><strong>Sex</strong>: <select id="sex">
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+            <option value="0">Unknown</option>
+        </select>
+        </label>
+        <br/>
+        <label><strong>Profession</strong>: <input type="text" id="profession"></label>
+        <br/>
+        <label><strong>E-mail</strong>: <input type="text" id="email"></label>
+        <br/>
+        <label><strong>QQ</strong>: <input type="text" id="qq"></label>
+        <br/>
+        <label><strong>Telephone</strong>: <input type="text" id="phone"></label>
+        <br/>
+    </form>
+    <input type="submit" value="Register" id="register"/>
+{% endblock %}

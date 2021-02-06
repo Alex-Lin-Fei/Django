@@ -1,0 +1,173 @@
+{#<!DOCTYPE html>#}
+{#{% load static %}#}
+{#{% load myrango_template_tags %}#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>#}
+{#        {% block title_block %}#}
+{#            How to Tango with Django!#}
+{#        {% endblock %}#}
+{#    </title>#}
+{#</head>#}
+{#<body>#}
+{#<div>#}
+{#    {% block sidebar_block %}#}
+{#        {% get_category_list category %}#}
+{#    {% endblock %}#}
+{#</div>#}
+{##}
+{#<div>#}
+{#    {% block body_block %}#}
+{#    {% endblock %}#}
+{#</div>#}
+{#<hr/>#}
+{#<div>#}
+{#    <ul>#}
+{#        {% if user.is_authenticated %}#}
+{#            <li><a href="{% url 'myrango:add_category' %}">Add New Category</a></li>#}
+{#            <li><a href="{% url 'myrango:restricted' %}">Restricted Page</a></li>#}
+{#            <li><a href="{% url 'auth_logout' %}?next=/myrango/">Logout</a></li>#}
+{#        {% else %}#}
+{#            <li><a href="{% url 'auth_login' %}">Login</a></li>#}
+{#            <li><a href="{% url 'registration_register' %}">Register Here</a></li>#}
+{#        {% endif %}#}
+{#        <li><a href="{% url 'myrango:about' %}">About</a></li>#}
+{#        <li><a href="{% url 'myrango:index' %}">Index</a></li>#}
+{#    </ul>#}
+{#</div>#}
+{#</body>#}
+{#</html>#}
+
+
+<!DOCTYPE html>
+{% load static %}
+<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+<script src="{% static 'js/myrango-ajax.js' %}"></script>
+{% load myrango_template_tags %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
+    <meta name="description" charset="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'images/2.jpg' %}">
+
+    <title>
+        Myrango - {% block title %}How to Myrango with Django!{% endblock %}
+    </title>
+    <link href="http://v4-alpha.getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href=
+                  "http://v4-alpha.getbootstrap.com/examples/dashboard/dashboard.css"
+          rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right hidden-lg-up"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-controls="navbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand" href="{% url 'myrango:index' %}">Myrango</a>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'myrango:index' %}">
+                    Home
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'myrango:about' %}">
+                    About
+                </a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'myrango:restricted' %}">
+                        Restricted Page
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'myrango:add_category' %}">
+                        Add a New Category
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'myrango:profile' user.username%}">
+                        Profile
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'auth_logout' %}?next=/myrango/">
+                        Logout
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'registration_register' %}">
+                        Register Here
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'auth_login' %}">
+                        Login
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+{#            <input class="input-medium search-query" type="text"#}
+{#            name="suggestion" value="" id="suggestion"/>#}
+
+            <ul class="nav nav-list flex-column">
+                <li class="nav-item">Type to find a category</li>
+                <form>
+                    <li class="nav-item"><input class="search-query form-control" type="text"
+                    name="suggestion" value="" id="suggestion"/>
+                    </li>
+                </form>
+            </ul>
+            <hr>
+            <div id="cats">
+            </div>
+        </div>
+        <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+            {% block body_block %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+</script>
+<script
+        src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
+</script>
+
+<script
+        src=
+                "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
+</script>
+
+</body>
+</html>
