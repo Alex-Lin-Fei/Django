@@ -1,0 +1,16 @@
+{% extends 'student/base.html' %}
+
+{% block body_block%}
+    <h3><a href="/admin/">Admin</a></h3>
+    <ul>
+    {% for student in students %}
+        <li>{{ student.name }} - {{ student.get_status_display }}</li>
+    {% endfor %}
+    </ul>
+    <hr/>
+    <form action="/student/index/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+    </form>
+{% endblock %}
