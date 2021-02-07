@@ -1,9 +1,10 @@
 {% extends 'myrango/base.html' %}
 {% load static %}
-
 {% block title_block %}
     Index
 {% endblock %}
+
+
 {% block body_block %}
 <div class="jumbotron">
 <h1 class="display-3">Myrango says...</h1>
@@ -48,5 +49,27 @@
 </p>
 </div>
     </div>
-<img src="{% static 'images/2.jpg' %}" alt="Picture of Myrango"/>
+    <ul id="image">
+    <li>
+        <img src="{% static 'images/1.jpg' %}" alt="Picture of Myrango" class="img_cycle" />
+    </li>
+    <li>
+        <img src="{% static 'images/2.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/3.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/5.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/6.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/7.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/9.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    </ul>
 {% endblock %}
