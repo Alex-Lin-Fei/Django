@@ -14,6 +14,12 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [STATIC_DIR, ]
+
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = MEDIA_DIR
 
 
 # Quick-start development settings - unsuitable for production
@@ -31,6 +37,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'saltfish',
+    'registration',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,7 +63,7 @@ ROOT_URLCONF = 'WebSite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [TEMPLATES_DIR, ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -63,6 +72,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # django提供的模板上下文处理器 在模板中引用上传的内容时，可以引用MEDIA_URL
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -119,3 +130,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+# 设为True 允许用户注册
+REGISTRATION_OPEN = True
+# 留一周的激活时间
+ACCOUNT_ACTIVATION_DAYS = 7
+# 设为True 注册后自动登录
+REGISTRATION_AUTO_LOGIN = True
+# 登录后呈现给用户的界面
+LOGIN_REDIRECT_URL = '/saltfish/'
+# 未登录以及访问需要验证身份的页面时重定向的页面
+LOGIN_URL = '/accounts/login/'

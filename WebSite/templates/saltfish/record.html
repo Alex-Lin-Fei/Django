@@ -1,0 +1,61 @@
+<div id="container">
+    <table id="records" class="sortable">
+    {% if nothing == True %}
+            <h3>You haven't
+                {% if type == 1 %}
+                    released
+                {% elif type == 2 %}
+                    bought
+                {% elif type == 3 %}
+                    sold
+                {% elif type == 4 %}
+                    cart
+                {% else %}
+                    collect
+                {% endif %}
+                any products yet
+            </h3>
+        {% else %}
+        <thead>
+        <tr>
+            <th class="sort-picture">
+                Picture
+            </th>
+            <th class="sort-tag">
+                Tag
+            </th>
+            <th class="sort-price">
+                Price
+            </th>
+            <th class="sort-datetime">
+                Datetime
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+
+            {% for record in records %}
+                <tr>
+                    <td><a href="{% url 'com_detail' record.commodity.id %}">
+                        <img src="{{ MEDIA_URL }}{{ record.commodity.picture }}"
+                             alt="{{ MEDIA_URL }}{{ record.commodity.picture }}"/>
+                    </a>
+                    </td>
+                    <td>
+                        {{ record.commodity.tag }}
+                    </td>
+                    <td>
+                        ${{ record.commodity.price }}
+                    </td>
+                    <td>
+                        {{ record.create_time }}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+{% if type == 1 %}
+    <a href="{% url 'release_commodity' %}">Add Commodity</a>
+{% endif %}

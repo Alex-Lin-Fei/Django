@@ -1,5 +1,7 @@
+
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.timezone import timezone
 # Create your models here.
 
 
@@ -63,7 +65,7 @@ class Post(models.Model):
     category = models.ForeignKey(Category, verbose_name='category', on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag, verbose_name='tag')
     owner = models.ForeignKey(User, verbose_name='author', on_delete=models.CASCADE)
-    create_time = models.DateTimeField(auto_now_add=True, verbose_name='create_time')
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name='create_time', default=timezone.now)
 
     class Meta:
         verbose_name = 'post'

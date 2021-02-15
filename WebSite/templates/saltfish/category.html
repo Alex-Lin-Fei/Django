@@ -1,0 +1,60 @@
+<div id="container">
+    <table id="categories" class="sortable">
+    {% if found == False %}
+            <h3>
+            Sorry, there is no product at the moment.
+            </h3>
+        {% else %}
+        <thead>
+        <tr>
+            <th class="sort-picture">
+                Picture
+            </th>
+            <th class="sort-tag">
+                Tag
+            </th>
+            <th class="sort-price">
+                Price
+            </th>
+            <th class="sort-times">
+                Views
+            </th>
+            <th class="sort-likes">
+                Likes
+            </th>
+            <th class="sort-datetime">
+                Datetime
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+
+            {% for commodity in commodities %}
+                <tr>
+                    <td><a href="{% url 'com_detail' commodity.id %}">
+                        <img src="{{ MEDIA_URL }}{{ commodity.picture }}"
+                             alt="{{ MEDIA_URL }}{{ commodity.picture }}"/>
+                    </a>
+                    </td>
+                    <td>
+                        {{ commodity.tag }}
+                    </td>
+                    <td>
+                        ${{ commodity.price }}
+                    </td>
+                    <td>
+                        {{ commodity.views }}
+                    </td>
+                    <td>
+                        {{ commodity.likes }}
+                    </td>
+                    <td>
+                        {{ commodity.create_time }}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+    <a href="{% url 'release_commodity' %}">Add Commodity</a>

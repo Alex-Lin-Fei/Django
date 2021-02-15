@@ -1,0 +1,18 @@
+{% extends 'saltfish/base.html' %}
+{% load static %}
+{% block title %}
+    Order
+{% endblock %}
+
+{% block body_block %}
+        <ul id="rNav">
+        {% for category in categories %}
+            <li class="category-type">{{ category.name }}</li>
+        {% endfor %}
+        </ul>
+
+    <div id="data-table">
+
+    </div>
+
+{% endblock %}

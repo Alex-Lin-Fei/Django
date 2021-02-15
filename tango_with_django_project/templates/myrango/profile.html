@@ -14,9 +14,9 @@
         <img src="{{ MEDIA_URL }}{{ userprofile.picture }}"
              width="300"
              height="300"
-             alt="{{ selecteduser.username }}"/>
+             alt="{{ MEDIA_URL }}{{ userprofile.picture }}"/>
     {% else %}
-        <img src="http://lorempixel.com/300/300/people/" img width="300" height="300" alt="{{ user.username }}"/>
+        <img src="http://lorempixel.com/300/300/people/" width="300" height="300" alt="{{ user.username }}"/>
     {% endif %}
     <br/><br/>
     <div id="profile_data">

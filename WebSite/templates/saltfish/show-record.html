@@ -1,0 +1,20 @@
+{% extends 'saltfish/base.html' %}
+{% load static %}
+{% block title %}
+    Record
+{% endblock %}
+
+{% block body_block %}
+        <ul id="rNav">
+            <li class="record-type" value="released" id="tmp">Released</li>
+            <li class="record-type" value="bought">Bought</li>
+            <li class="record-type" value="sold">Sold</li>
+            <li class="record-type" value="cart">Cart</li>
+            <li class="record-type" value="collection">Collection</li>
+        </ul>
+
+    <div id="data-table">
+
+    </div>
+
+{% endblock %}

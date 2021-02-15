@@ -1,0 +1,50 @@
+{% extends 'saltfish/base.html' %}
+{% block title %}
+    Commodity {{ commodity.id }} detail
+{% endblock %}
+
+{% block body_block %}
+    <div class="page-header">
+        {% if commodity %}
+            <h1>{{ commodity.tag }} Detail</h1>
+            </div>
+            {% if commodity.picture %}
+                <img src="{{ MEDIA_URL }}{{ commodity.picture }}"
+                     width="300"
+                     alt="{{ commodity.tag }}"/>
+            {% else %}
+                <img src="http://lorempixel.com/300/300/people/"
+                     width="300" height="300" alt="{{ commodity.owner.username }}"/>
+            {% endif %}
+            <br/>
+            <br/>
+            <div>
+            {% if commodity.owner == owner %}
+                <form method="post" action="." enctype="multipart/form-data" class="detail">
+                    {% csrf_token %}
+                    {{ com_form.as_p }}
+                    <input type="submit" name="update" value="Update"/>
+                    <input type="submit" name="remove" value="Remove"/>
+                </form>
+            {% else %}
+                <form method="post" action="{% url 'add_commodity' commodity.id %}" class="detail">
+                {% csrf_token %}
+                    <p><strong>Tag: </strong>{{ commodity.tag }}</p>
+                    <p><strong>Price: $</strong>{{ commodity.price }}</p>
+                    <p><strong>Description: </strong>{{ commodity.description }}</p>
+                    <p><strong>Picture: </strong>{{ commodity.picture }}</p>
+                    <p><strong>Category: </strong>{{ commodity.category }}</p>
+                    <p><strong>Departure: </strong>{{ commodity.departure }}</p>
+                    <input type="submit" id="collect" name="collect" value="Collect"/>
+                    <input type="submit" id="cart" name="cart" value="Cart"/>
+                </form>
+                <br/>
+                <form method="post" action="{% url 'fill_order' %}">
+                    <input type="submit" name="buy" value="Buy"/>
+                </form>
+            {% endif %}
+        {% else %}
+            <h1>Not found</h1>
+        {% endif %}
+        </div>
+{% endblock %}

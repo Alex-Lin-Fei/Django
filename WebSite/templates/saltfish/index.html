@@ -1,0 +1,78 @@
+{% extends 'saltfish/base.html' %}
+{% load static %}
+{% block js_blick %}
+    <script src="{% static 'js/cycle.js' %}"></script>
+{% endblock %}
+{% block title_block %}
+    Index
+{% endblock %}
+
+
+{% block body_block %}
+<div class="jumbotron">
+<h1 class="display-3">BUPT...</h1>
+{% if user.is_authenticated %}
+    <h1>hey there {{ user.username }}!</h1>
+{% else %}
+    hey there partner!
+{% endif %}
+</div>
+
+<div class="row marketing">
+<div class="col-lg-6">
+<h4>Most Liked Categories</h4>
+<p>
+    {% if categories %}
+        <ul class="list-group">
+            {% for catetory in categories %}
+                <li class="list-group-item">
+                    <a href="#">{{ catetory.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no categories present.</strong>
+    {% endif %}
+
+</div>
+<div class="col-lg-6">
+<h4>Most Viewed Pages</h4>
+<p>
+    {% if pages %}
+        <ul class="list-group">
+            {% for page in pages %}
+                <li class="list-group-item">
+                    <a href="#">{{ page.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <strong>There are no pages present.</strong>
+    {% endif %}
+
+</div>
+    </div>
+    <ul id="cycle-image">
+    <li>
+        <img src="{% static 'images/1.jpg' %}" alt="Picture of Myrango" class="img_cycle" />
+    </li>
+    <li>
+        <img src="{% static 'images/2.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/3.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/5.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/6.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/7.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    <li>
+        <img src="{% static 'images/9.jpg' %}" alt="Picture of Myrango" class="img_cycle"/>
+    </li>
+    </ul>
+{% endblock %}

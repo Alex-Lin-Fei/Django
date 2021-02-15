@@ -46,7 +46,7 @@
 <script src="{% static 'js/jquery.cycle.all.js' %}"></script>
 <script src="{% static 'js/myrango-ajax.js' %}"></script>
 <script src="{% static 'js/cycle.js' %}"></script>
-{% load myrango_template_tags %}
+{#{% load myrango_template_tags %}#}
 
 <html lang="en">
 <head>
@@ -109,9 +109,7 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'myrango:profile' user.username%}">
-                        <div class="profile">
-                            <img src="{{ MEDIA_URL }}{{ userprofile.picture }}"/>
-                        </div>
+                        Profile
                     </a>
                 </li>
 

@@ -1,0 +1,129 @@
+li.nav-item {
+    width: 150px;
+}
+
+ul#rNav {
+    list-style: none;
+    display: inline-block;
+    padding-left: 0;
+    background-color: #e3e3e3;
+}
+
+ul#rNav li {
+    display: inline-block;
+    width: 140px;
+    height: 51px;
+    text-align: center;
+    line-height: 51px;
+}
+
+div.logo {
+    width: 160px;
+    height: 51px;
+    /*background: url(logo.png);*/
+    display: inline-block;
+    margin-right: 10%;
+}
+
+div.logo, ul {
+    vertical-align: middle;
+}
+
+#rNav li:hover {
+    color: white;
+    background-color: #11278a;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+header {
+    height: 55px;
+    padding-bottom: 2px;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+ul#rNav {
+    display: inline-block;
+}
+
+
+
+#container {
+  margin: 10px 2em;
+}
+
+table {
+  margin: 1em 0;
+}
+tbody td img {
+  width: 176px;
+}
+
+tbody td {
+    width: 185px;
+}
+
+th {
+  text-align: left;
+  white-space: nowrap;
+  background-color: #eee;
+}
+
+
+th.sort a {
+  text-decoration: none;
+  display: block;
+  background:  url(../../static/images/sort-icons.png) no-repeat 0 3px;
+  padding-left: 20px;
+}
+
+th.sorted-desc a {
+  background-position: 0 -47px;
+}
+th.sorted-asc a {
+  background-position: 0 -97px;
+}
+
+th.sort a:hover {
+  background-color: #ddd;
+}
+
+th.sort a:focus {
+  color: #222;
+}
+
+th, td {
+  padding: 3px 6px;
+}
+
+
+
+div.profile {
+    display: inline;
+    width: 54px;
+    height: 54px;
+    overflow: hidden;
+    right: 2px;
+}
+
+div.profile img{
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+}
+
+#cycle-image img {
+    width: 1200px;
+}
+
+img.search-img {
+    width: 88px;
+}
+
+#res li {
+    list-style:none;
+}
+
+form.detail {
+    /*float: right;*/
+}

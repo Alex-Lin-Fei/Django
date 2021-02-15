@@ -1,0 +1,20 @@
+{% extends 'saltfish/base.html' %}
+{% block title %}
+    Release Commodity
+{% endblock %}
+
+{% block body_block %}
+    {% if success %}
+        <h3>Release commodity successfully</h3>
+        {% else %}
+            <h3>Please fill in the product information</h3>
+    {% endif %}
+    <form role="form" method="post" action="{% url 'release_commodity' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ com_form.as_p }}
+    <input type="submit" value="Release" />
+    <input type="button" value="Cancel" />
+    </form>
+
+    <a href="{% url 'index' %}">Return HomePage</a>
+{% endblock %}

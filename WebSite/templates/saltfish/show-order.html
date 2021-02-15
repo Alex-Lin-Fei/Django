@@ -1,0 +1,20 @@
+{% extends 'saltfish/base.html' %}
+{% load static %}
+{% block title %}
+    Order
+{% endblock %}
+
+{% block body_block %}
+        <ul id="rNav">
+            <li class="order-type" value="undelivered">To be delivered</li>
+            <li class="order-type" value="dispatched">To be receipted</li>
+            <li class="order-type" value="unevaluated">To be evaluated</li>
+            <li class="order-type" value="refund">Refund</li>
+            <li class="order-type" value="completed">Completed</li>
+        </ul>
+
+    <div id="data-table">
+
+    </div>
+
+{% endblock %}

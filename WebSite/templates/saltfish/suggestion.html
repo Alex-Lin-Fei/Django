@@ -1,0 +1,32 @@
+<ul id="res">
+    {% if userinfo_list %}
+        <p><b>User:</b></p>
+        {% for u in userinfo_list %}
+            <li>
+                <div class="profile">
+                    <a href="{% url 'info' u.user.username %}">
+                    <img src="{{ MEDIA_URL }}{{ u.profile }}" alt="user profile" />
+                    </a>
+                </div>
+            <div class="profile"><label>{{ u.user.username }}</label></div>
+
+            </li>
+        {% endfor %}
+    {% else %}
+
+    {% endif %}
+<br/>
+<br/>
+    {% if com_list %}
+        <p><b>Commodity:</b></p>
+        {% for com in com_list %}
+            <li>
+            <a href="{% url 'com_detail' com.id %}">
+                <img src="{{ MEDIA_URL }}{{ com.picture }}" alt="commodity picture" class="search-img"/>
+            </a>
+                <label>{{ com.tag }}</label>
+            </li>
+        {% endfor %}
+    {% else %}
+    {% endif %}
+</ul>

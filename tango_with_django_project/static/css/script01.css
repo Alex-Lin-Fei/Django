@@ -1,12 +1,15 @@
 div.profile {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+    width: 100px;
+    height: 100px;
     overflow: hidden;
     right: 20px;
 }
 
-div.profile img{width: 100%; }
+div.profile img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
 
 #image img.img_cycle {
     width: 1200px;

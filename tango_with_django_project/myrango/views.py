@@ -261,7 +261,6 @@ def suggest_category(request):
     if request.method == 'GET':
         starts_with = request.GET['suggestion']
     cat_list = get_category_list(8, starts_with)
-
     return render(request, 'myrango/cats.html', {'cats': cat_list})
 
 

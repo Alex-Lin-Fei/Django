@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load static %}
+<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+<script src="{% static 'js/jquery.cycle.all.js' %}"></script>
+<script src="{% static 'js/style.js' %}"></script>
+{% block js_blick %}
+{% endblock %}
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
+    <meta name="description" charset="">
+    <meta name="author" content="">
+    <link rel="icon" href="{% static 'images/2.jpg' %}">
+
+    <title>
+        Salt fish - {% block title %}Welcome to BUPT salt fish!{% endblock %}
+    </title>
+    <link href="http://v4-alpha.getbootstrap.com/"
+          rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/4.3/examples/dashboard/dashboard.css"
+          rel="stylesheet">
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"
+          media="screen"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+
+<nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right hidden-lg-up"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-controls="navbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand" href="{% url 'index' %}">SaltFish</a>
+
+    <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">
+                    Home
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    About
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'category' %}">
+                    Category
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Search
+                </a>
+            </li>
+
+
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'record' %}">
+                        Record
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'order' %}">
+                        Order
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'info' user.username %}">
+                        PersonalInfo
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'auth_logout' %}?next=/saltfish/">
+                        Logout
+                    </a>
+                </li>
+
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'registration_register' %}">
+                        Register Here
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'auth_login' %}">
+                        Login
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            {#            <input class="input-medium search-query" type="text"#}
+            {#            name="suggestion" value="" id="suggestion"/>#}
+
+            <ul class="nav nav-list flex-column">
+                <li class="nav-item">Search a item or user</li>
+                <form>
+                    <li class="nav-item">
+                        <input class="search-query form-control" type="text"
+                                                name="suggestion" value="" id="suggestion" />
+                    </li>
+                </form>
+            </ul>
+            <hr>
+            <div id="result">
+            </div>
+        </div>
+        <div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+            {% block body_block %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js">
+</script>
+<script
+        src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js">
+</script>
+
+<script
+        src=
+                "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js">
+</script>
+
+</body>
+</html>

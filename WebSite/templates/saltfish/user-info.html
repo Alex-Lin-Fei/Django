@@ -1,0 +1,36 @@
+{% extends 'saltfish/base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ selecteduser.username }} Information
+{% endblock %}
+
+{% block body_block %}
+    <div class="page-header">
+        <h1>{{ selecteduser.username }} Information</h1>
+    </div>
+    {% if user_info.profile %}
+        <img src="{{ MEDIA_URL }}{{ user_info.profile }}"
+             width="300" height="300"
+             alt="{{ MEDIA_URL }}{{ user_info.profile }}"/>
+    {% else %}
+        <img src="http://lorempixel.com/300/300/people/"
+             width="300" height="300" alt="{{ user.username }}"/>
+    {% endif %}
+    <br/><br/>
+    <div>
+        {% if selecteduser.username == user.username %}
+            <form method="post" action="." enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Update"/>
+            </form>
+        {% else %}
+            <p><strong>Tag: </strong>{{ selecteduser.usrname }}</p>
+            <p><strong>Email: </strong>{{ selecteduser.email }}</p>
+            <p><strong>Telephone: </strong>{{ user_info.phone }}</p>
+            <p><strong>Grade: </strong>{{ user.grade }}</p>
+            <p><strong>Faculty: </strong>{{ user.faculty }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
