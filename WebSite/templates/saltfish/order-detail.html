@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'saltfish/base.html' %}
+{% block title %}
+    Order detail
+{% endblock %}
 
-</body>
-</html>
+{% block body_block %}
+    <div class="page-header">
+        <h1>{{ order.commodity.tag }} Order</h1>
+    </div>
+    {% if order.commodity.picture %}
+        <img src="{{ MEDIA_URL }}{{ order.commodity.picture }}"
+             width="300"
+             alt="{{ order.commodity.tag }}"/>
+    {% else %}
+        <img src="http://lorempixel.com/300/300/people/"
+             width="300" height="300" alt="{{ order.commodity.owner.username }}"/>
+    {% endif %}
+    <form method="post" action="{% url 'order_detail' order.id %}">
+        {% csrf_token %}
+        {{ order_form }}
+        <input type="submit" value="Confirm"/>
+    </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+<div id="container" class="message-list">
+    {% if nothing %}
+        <p>There are no notice!</p>
+    {% else %}
+        {% for notice in notices %}
+            <p>
+            <li>
+            <div class="profile">
+                    <img src="http://lorempixel.com/300/300/people/" alt="default profile" />
+                </div>
+            </li>
+            <li>
+            {% if notice.type == 1 %}
+
+                {% elif notice.type == 2 %}
+            {% endif %}
+            </li>
+            </p>
+        {% endfor %}
+    {% endif %}
+</div>

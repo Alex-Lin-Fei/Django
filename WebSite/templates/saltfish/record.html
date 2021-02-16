@@ -48,7 +48,7 @@
                         ${{ record.commodity.price }}
                     </td>
                     <td>
-                        {{ record.create_time }}
+                        {{ record.create_time|date:"Y-m-d H:i:s"  }}
                     </td>
                 </tr>
             {% endfor %}

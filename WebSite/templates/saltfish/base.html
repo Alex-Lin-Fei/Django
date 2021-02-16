@@ -62,12 +62,6 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Search
-                </a>
-            </li>
-
 
             {% if user.is_authenticated %}
                 <li class="nav-item">
@@ -79,6 +73,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'order' %}">
                         Order
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'message' %}">
+                        Message
                     </a>
                 </li>
 

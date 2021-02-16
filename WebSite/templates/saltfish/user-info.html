@@ -26,11 +26,11 @@
                 <input type="submit" value="Update"/>
             </form>
         {% else %}
-            <p><strong>Tag: </strong>{{ selecteduser.usrname }}</p>
+            <p><strong>Tag: </strong>{{ selecteduser.username }}</p>
             <p><strong>Email: </strong>{{ selecteduser.email }}</p>
             <p><strong>Telephone: </strong>{{ user_info.phone }}</p>
-            <p><strong>Grade: </strong>{{ user.grade }}</p>
-            <p><strong>Faculty: </strong>{{ user.faculty }}</p>
+            <p><strong>Grade: </strong>{{ user_info.grade }}</p>
+            <p><strong>Faculty: </strong>{{ user_info.faculty }}</p>
         {% endif %}
     </div>
 {% endblock %}

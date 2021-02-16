@@ -1,5 +1,10 @@
 <div id="container">
-    <table id="orders" class="sortable">
+    {% if nothing == True %}
+        <h3>
+            There are no orders
+        </h3>
+    {% else %}
+        <table id="orders" class="sortable">
         <thead>
         <tr>
             <th class="sort-picture">
@@ -17,44 +22,26 @@
         </tr>
         </thead>
         <tbody>
-        {% if nothing == True %}
-            <h3>You haven't
-                {% if type == 1 %}
-                    released
-                {% elif type == 2 %}
-                    bought
-                {% elif type == 3 %}
-                    sold
-                {% elif type == 4 %}
-                    cart
-                {% else %}
-                    collect
-                {% endif %}
-                any products yet
-            </h3>
-        {% else %}
-            {% for order in orders %}
-                <tr>
-                    <td><a href="{% url 'order_detail' order.commodity.id %}">
-                        <img src="{{ MEDIA_URL }}{{ order.commodity.picture }}"
-                             alt="{{ MEDIA_URL }}{{ order.commodity.picture }}"/>
-                    </a>
-                    </td>
-                    <td>
-                        {{ order.commodity.tag }}
-                    </td>
-                    <td>
-                        ${{ order.commodity.price }}
-                    </td>
-                    <td>
-                        {{ order.create_time }}
-                    </td>
-                </tr>
-            {% endfor %}
-        {% endif %}
-        </tbody>
+
+        {% for order in orders %}
+            <tr>
+                <td><a href="{% url 'order_detail' order.commodity.id %}">
+                    <img src="{{ MEDIA_URL }}{{ order.commodity.picture }}"
+                         alt="{{ MEDIA_URL }}{{ order.commodity.picture }}"/>
+                </a>
+                </td>
+                <td>
+                    {{ order.commodity.tag }}
+                </td>
+                <td>
+                    ${{ order.commodity.price }}
+                </td>
+                <td>
+                    {{ order.create_time|date:"Y-m-d H:i:s"  }}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
     </table>
 </div>
-{% if type == 1 %}
-    <a href="{% url 'release_commodity' %}">Add Commodity</a>
-{% endif %}

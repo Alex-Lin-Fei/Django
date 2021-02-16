@@ -127,3 +127,13 @@ img.search-img {
 form.detail {
     /*float: right;*/
 }
+
+div.message-list li {
+    float: left;
+}
+
+#comments {
+    margin-top: 70px;
+    margin-left: 500px;
+}
+

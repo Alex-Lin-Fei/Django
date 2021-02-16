@@ -1,18 +1,17 @@
 {% extends 'saltfish/base.html' %}
 {% load static %}
+
 {% block title %}
-    Category
+    Message
 {% endblock %}
 
 {% block body_block %}
-        <ul id="rNav">
-        {% for category in categories %}
-            <li class="category-type">{{ category.name }}</li>
-        {% endfor %}
+    <ul id="rNav">
+            <li class="message-type" value="cart">System Message</li>
+            <li class="message-type" value="collection">Live Chat</li>
         </ul>
 
     <div id="data-table">
 
     </div>
-
 {% endblock %}

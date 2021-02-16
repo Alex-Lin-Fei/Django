@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Commodity, UserInfo, Category, Record, Order
+from .models import Commodity, UserInfo, Category, Record, Order, Message, Comment, Notice
+
+
 # Register your models here.
 
 
@@ -10,7 +12,7 @@ class UserInfoAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name', )}
+    prepopulated_fields = {'slug': ('name',)}
     list_display = ('name', 'slug')
 
 
@@ -25,9 +27,12 @@ class CommodityAdmin(admin.ModelAdmin):
         'owner',
         'tag',
         'price',
+        'quantity',
         'picture',
         'category',
         'departure',
+        'views',
+        'likes',
         'create_time',
     )
 
@@ -54,5 +59,34 @@ class CommodityAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('buyer', 'commodity', 'number', 'status', 'address', 'create_time', 'receipt_time')
+    list_display = (
+        'buyer', 'commodity',
+        'number', 'status',
+        'address', 'create_time',
+        'delivery_time', 'receipt_time'
+    )
 
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = (
+        'sender', 'receiver',
+        'status', 'content',
+        'create_time',
+    )
+
+
+@admin.register(Notice)
+class NoticeAdmin(admin.ModelAdmin):
+    list_display = (
+        'order', 'status',
+        'type', 'create_time',
+    )
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'publisher', 'commodity',
+        'content', 'create_time',
+    )

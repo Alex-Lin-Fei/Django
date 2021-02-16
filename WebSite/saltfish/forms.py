@@ -18,8 +18,6 @@ class UserInfoForm(forms.ModelForm):
 
 
 class CommodityForm(forms.ModelForm):
-    # picture = forms.ImageField()
-    tag = forms.CharField()
     views = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     likes = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
     numberOfComments = forms.IntegerField(widget=forms.HiddenInput(), initial=0)
@@ -32,4 +30,7 @@ class CommodityForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('number', 'address')
+        fields = ('buyer',
+                  'commodity',
+                  'number',
+                  'address')

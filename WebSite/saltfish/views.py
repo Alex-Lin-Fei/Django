@@ -6,8 +6,8 @@ from django.urls import reverse
 from django.utils import timezone
 from registration.forms import User
 
-from .forms import UserForm, UserInfoForm, CommodityForm
-from .models import UserInfo, Record, Commodity, Category
+from .forms import UserForm, UserInfoForm, CommodityForm, OrderForm
+from .models import UserInfo, Record, Commodity, Category, Order, Message, Notice
 
 
 # Create your views here.
@@ -184,21 +184,25 @@ def detail(request, com_id):
         {'tag': commodity.tag, 'price': commodity.price,
          'description': commodity.description, 'picture': commodity.picture,
          'quantity': commodity.quantity, 'category': commodity.category,
-         'departure': commodity.departure
+         'departure': commodity.departure, 'views': commodity.views,
+         'likes': commodity.likes, 'numberOfComments': commodity.numberOfComments
          })
 
     if request.method == 'POST':
         commodity.create_time = timezone.now()
-        com_form = CommodityForm(request.POST, request.FILES, instance=commodity)
+        com_form = CommodityForm(request.POST, request.FILES,
+                                 instance=commodity)
         if 'update' in request.POST:
             if com_form.is_valid():
                 com_form.save(commit=True)
-                return HttpResponse('ok')
             else:
                 print(com_form.errors)
         elif 'remove' in request.POST:
             commodity.delete()
-            return redirect('index')
+        return redirect('index')
+    else:
+        commodity.views += 1
+    commodity.save()
 
     return render(request,
                   'saltfish/com-detail.html',
@@ -233,10 +237,6 @@ def add_commodity(request, com_id):
     return redirect('record')
 
 
-def search(request):
-    return
-
-
 def show_category(request):
     categories = Category.objects.all()
 
@@ -261,13 +261,60 @@ def find_commodity(com_id):
 
 @login_required
 def fill_order(request, com_id):
+    commodity = find_commodity(com_id)
+    order_form = OrderForm({'buyer': request.user, 'commodity': commodity})
 
-    return
+    if request.method == 'POST':
+        order_form = OrderForm(request.POST)
+        if order_form.is_valid():
+            # 保存订单
+            order = order_form.save(commit=False)
+            order.buyer = request.user
+            order.commodity = commodity
+            order.save()
+            # 系统消息通知卖家和买家
+            notice_to_seller = Notice.objects.create(order=order, type=1)
+            notice_to_buyer = Notice.objects.create(order=order, type=2)
+            notice_to_seller.save()
+            notice_to_buyer.save()
+
+            return HttpResponse('ok')
+
+    context_dict = {'order_form': order_form, 'commodity': commodity}
+    return render(request, 'saltfish/order-detail.html', context_dict)
 
 
 @login_required
 def show_order(request):
     return render(request, 'saltfish/show-order.html', {})
+
+
+@login_required
+def get_order(request):
+    type = request.GET.get('type')
+    orders = Order.objects.filter(status=type, buyer=request.user)
+    nothing = len(orders) == 0
+
+    return render(request, 'saltfish/order.html', {'orders': orders, 'nothing': nothing})
+
+
+def order_detail(request, order_id):
+    try:
+        order = Order.objects.get(id=order_id)
+    except Order.DoesNotExist:
+        return redirect('index')
+
+    order_form = OrderForm({'buyer': order.buyer, 'commodity': order.commodity,
+                            'number': order.number, 'address': order.address,
+                            'create_time': order.create_time, 'status': order.status})
+
+    if request.method == 'POST':
+        order_form = OrderForm(request.POST, request.FILES, instance=order)
+        if order_form.is_valid():
+            order_form.save(commit=True)
+
+    return render(request, 'saltfish/order-detail.html',
+                  {'order_form': order_form, 'order': order})
 
 
 def get_result_list(starts_with=''):
@@ -287,8 +334,41 @@ def get_suggest(request):
     result_list = get_result_list(starts_with)
     return render(request,
                   'saltfish/suggestion.html',
-                  {
-                   'com_list': result_list[0],
-                  'userinfo_list': result_list[1]})
+                  {'com_list': result_list[0],
+                   'userinfo_list': result_list[1]})
 
 
+@login_required
+def like_commodity(request):
+    com_id = None
+    if request.method == 'GET':
+        com_id = request.GET['com_id']
+    likes = 2
+    if com_id:
+        com = Commodity.objects.get(id=com_id)
+        if com:
+            likes = com.likes + 1
+            com.likes = likes
+            com.save()
+
+    return HttpResponse(likes)
+
+
+@login_required
+def show_message(request):
+    return render(request, 'saltfish/show-message.html', {})
+
+
+@login_required
+def get_message(request):
+    type = request.GET.get('type')
+    if type == 1:
+        notices = Notice.objects.filter()   # 获取system notice
+        nothing = len(notices) == 0
+        return render(request, 'saltfish/notice.html',
+                      {'notices': notices, 'nothing': nothing})
+
+    else:
+        pass
+
+    return

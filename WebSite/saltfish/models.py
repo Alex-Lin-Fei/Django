@@ -57,13 +57,13 @@ class Commodity(models.Model):
     picture = models.ImageField(upload_to='commodity_images',
                                 default="http://lorempixel.com/300/300/people/")
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(verbose_name='quantity of commodity')
+    quantity = models.IntegerField(verbose_name='quantity')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='create_time')
-    views = models.PositiveIntegerField(default=0)
-    likes = models.PositiveIntegerField(default=0)
+    views = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
     departure = models.CharField(max_length=64)
-    numberOfComments = models.PositiveIntegerField(default=0, verbose_name='number of comments')
+    numberOfComments = models.IntegerField(default=0, verbose_name='number of comments')
 
     def __str__(self):
         return self.tag
@@ -112,11 +112,73 @@ class Order(models.Model):
 
     buyer = models.ForeignKey(User, on_delete=models.CASCADE)
     commodity = models.ForeignKey(Commodity, on_delete=models.CASCADE)
-    number = models.PositiveIntegerField()
-    status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=UNEVALUATED)
-    address = models.CharField(max_length=64, blank=False)
+    number = models.IntegerField(default=0, blank=True)
+    status = models.PositiveIntegerField(choices=STATUS_ITEMS, default=UNDELIVERED)
+    address = models.CharField(max_length=64, blank=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    receipt_time = models.DateTimeField(blank=True)
+    delivery_time = models.DateTimeField(blank=True, default=timezone.now)
+    receipt_time = models.DateTimeField(blank=True, default=timezone.now)
 
     class Meta:
         verbose_name_plural = 'orders'
+
+
+class Message(models.Model):
+    UNREAD = 1
+    READ = 2
+    STATUS_ITEM = (
+        (UNREAD, 'unread'),
+        (READ, 'read'),
+    )
+
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiver')
+    content = models.CharField(max_length=64)
+    create_time = models.DateTimeField(auto_now_add=True)
+    status = models.PositiveIntegerField(choices=STATUS_ITEM, default=UNREAD)
+
+    class Meta:
+        verbose_name_plural = 'messages'
+
+
+class Notice(models.Model):
+    UNREAD = 1
+    READ = 2
+    STATUS_ITEM = (
+        (UNREAD, 'unread'),
+        (READ, 'read'),
+    )
+
+    BOUGHT_SELLER = 1
+    BOUGHT_BUYER = 2
+    SEND_SELLER = 3
+    SEND_BUYER = 4
+    RECEIVER_SELLER = 5
+    RECEIVER_BUYER = 6
+
+    TYPE_ITEM = (
+        (BOUGHT_SELLER, 'bought_seller'),
+        (BOUGHT_BUYER, 'bought_buyer'),
+        (SEND_SELLER, 'send_seller'),
+        (SEND_BUYER, 'send_buyer'),
+        (RECEIVER_SELLER, 'receiver_seller'),
+        (RECEIVER_BUYER, 'receiver_buyer'),
+    )
+
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    status = models.PositiveIntegerField(choices=STATUS_ITEM, default=UNREAD)
+    type = models.PositiveIntegerField(choices=TYPE_ITEM)
+    create_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'notices'
+
+
+class Comment(models.Model):
+    publisher = models.ForeignKey(User, on_delete=models.CASCADE)
+    commodity = models.ForeignKey(Commodity, on_delete=models.CASCADE)
+    content = models.CharField(max_length=128)
+    create_time = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = 'comments'

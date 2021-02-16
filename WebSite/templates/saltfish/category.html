@@ -1,25 +1,25 @@
 <div id="container">
-    <table id="categories" class="sortable">
     {% if found == False %}
-            <h3>
+        <h3>
             Sorry, there is no product at the moment.
-            </h3>
-        {% else %}
+        </h3>
+    {% else %}
+        <table id="categories" class="sortable">
         <thead>
         <tr>
             <th class="sort-picture">
                 Picture
             </th>
-            <th class="sort-tag">
+            <th class="sort-alpha">
                 Tag
             </th>
-            <th class="sort-price">
+            <th class="sort-numeric">
                 Price
             </th>
-            <th class="sort-times">
+            <th class="sort-numeric">
                 Views
             </th>
-            <th class="sort-likes">
+            <th class="sort-numeric">
                 Likes
             </th>
             <th class="sort-datetime">
@@ -29,32 +29,32 @@
         </thead>
         <tbody>
 
-            {% for commodity in commodities %}
-                <tr>
-                    <td><a href="{% url 'com_detail' commodity.id %}">
-                        <img src="{{ MEDIA_URL }}{{ commodity.picture }}"
-                             alt="{{ MEDIA_URL }}{{ commodity.picture }}"/>
-                    </a>
-                    </td>
-                    <td>
-                        {{ commodity.tag }}
-                    </td>
-                    <td>
-                        ${{ commodity.price }}
-                    </td>
-                    <td>
-                        {{ commodity.views }}
-                    </td>
-                    <td>
-                        {{ commodity.likes }}
-                    </td>
-                    <td>
-                        {{ commodity.create_time }}
-                    </td>
-                </tr>
-            {% endfor %}
-        {% endif %}
-        </tbody>
+        {% for commodity in commodities %}
+            <tr>
+                <td><a href="{% url 'com_detail' commodity.id %}">
+                    <img src="{{ MEDIA_URL }}{{ commodity.picture }}"
+                         alt="{{ MEDIA_URL }}{{ commodity.picture }}"/>
+                </a>
+                </td>
+                <td>
+                    {{ commodity.tag }}
+                </td>
+                <td>
+                    ${{ commodity.price }}
+                </td>
+                <td>
+                    {{ commodity.views }}
+                </td>
+                <td>
+                    {{ commodity.likes }}
+                </td>
+                <td>
+                    {{ commodity.create_time|date:"Y-m-d H:i:s"  }}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
     </table>
 </div>
-    <a href="{% url 'release_commodity' %}">Add Commodity</a>
+<a href="{% url 'release_commodity' %}">Add Commodity</a>
