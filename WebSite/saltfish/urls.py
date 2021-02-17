@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^suggest/$', views.get_suggest, name='suggest'),
     url(r'like/$', views.like_commodity, name='like'),
     url(r'message/$', views.show_message, name='message'),
+    url(r'comments/$', views.get_comment, name='get_comment'),
 ]

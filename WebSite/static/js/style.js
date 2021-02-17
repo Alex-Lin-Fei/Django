@@ -116,5 +116,13 @@ $(document).ready(function () {
     });
 
 
+//   查看评论
+    $('#show-comments').click(function () {
+        var $list = $('#comment-list');
+        var com_id = $('#id').text();
+        $.get('saltfish/comments', {com_id: com_id}, function (data) {
+           $list.html(data);
+        });
+    });
 
 });

@@ -7,7 +7,7 @@ from django.utils import timezone
 from registration.forms import User
 
 from .forms import UserForm, UserInfoForm, CommodityForm, OrderForm
-from .models import UserInfo, Record, Commodity, Category, Order, Message, Notice
+from .models import UserInfo, Record, Commodity, Category, Order, Message, Notice, Comment
 
 
 # Create your views here.
@@ -372,3 +372,13 @@ def get_message(request):
         pass
 
     return
+
+
+def get_comment(request):
+    if 'com_id' in request.GET:
+        com_id = request.GET['com_id']
+        commodity = Commodity.objects.get(id=com_id)
+        comments = Comment.objects.filter(commodity=commodity).order_by('-create_time')
+        nothing = len(comments) == 0
+
+        return render(request, 'saltfish/comment.html', {'comments': comments, 'nothing': nothing})
