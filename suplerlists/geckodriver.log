@@ -7,3 +7,11 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 
 ###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
 
+1617948167621	geckodriver	INFO	Listening on 127.0.0.1:59879
+1617948170712	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\20550\\AppData\\Local\\Temp\\rust_mozprofile1tzMJR"
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1617948174591	Marionette	INFO	Listening on port 59888
+[Parent 6776, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1617948175215	Marionette	WARN	TLS certificate errors will be ignored for this session
+1617948179799	Marionette	INFO	Stopped listening on port 59888
+[Parent 6776, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
