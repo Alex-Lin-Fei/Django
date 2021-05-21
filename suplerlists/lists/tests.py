@@ -1,3 +1,5 @@
+from unittest import TestCase
+
 from selenium import webdriver
 import unittest
 from selenium.webdriver.common.keys import Keys
@@ -5,16 +7,19 @@ import time
 from django.test import LiveServerTestCase
 from selenium.common.exceptions import WebDriverException
 
+from lists.models import Item
+
 MAX_WAIT = 10
+
 
 class NewVisitorTest(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
-    
+
     def tearDown(self):
         self.browser.quit()
         # pass
-    
+
     def wait_for_row_in_list_table(self, row_text):
         start_time = time.time()
         while True:
@@ -22,12 +27,12 @@ class NewVisitorTest(LiveServerTestCase):
                 table = self.browser.find_element_by_id('id_list_table')
                 rows = table.find_elements_by_tag_name('tr')
                 self.assertIn(row_text, [row.text for row in rows])
-                return 
+                return
             except (AssertionError, WebDriverException) as e:
                 if time.time() - start_time > MAX_WAIT:
                     raise e
                 time.sleep(0.5)
-    
+
     def test_can_start_a_list_for_one_user(self):
         # edith has heard about a cool new online to-do app.
         # she goes to check out its homepage
@@ -48,13 +53,13 @@ class NewVisitorTest(LiveServerTestCase):
 
         # She types "Buy peacock feathers" into a text box
         # (Edith's hobby is tying fly-fishing lures)
-        
+
         # When she hits enter, the page updates, and now the page lists
         # "1: Buy peacock feathers" as an item in a to-do list
         inputbox.send_keys('Buy peacock feathers')
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
-        
+
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Use peacock feathers to make a fly')
         inputbox.send_keys(Keys.ENTER)
@@ -94,3 +99,21 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertIn('Buy milk', page_text)
 
+    def test_redirects_after_POST(self):
+        response = self.client.post('/', data={'item_test': 'A new list item'})
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world')
+
+
+class ListViewTest(TestCase):
+    def test_uses_list_template(self):
+        response = self.client.get('/lists/the-only-list-in-the-world/')
+        self.assertTemplateUsed(response, 'list.html')
+
+    def test_displays_all_items(self):
+        Item.objects.create(text="itemey 1")
+        Item.objects.create(test='itemey 2')
+        response = self.client.get('lists/the-only-list-in-the-world/')
+
+        self.assertContains(response, 'itemey 1')
+        self.assertContains(response, 'itemey 2')
